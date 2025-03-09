@@ -52,13 +52,15 @@ function App() {
     // ✅ Loop through emails and send one by one
     for (let i = 0; i < emails.length; i++) {
       await axios.post(
-  'https://bulkmail-backend-kavya-7u21.vercel.app/send-mail', // Your backend URL
-  { email }, // Your email data
-  { withCredentials: true }
-)
-
-      // ✅ Update Progress
-      setSentEmails(i + 1);
+        'https://bulkmail-backend-kavya-r5crmd6pv-kavyas-projects-fffd4e21.vercel.app/sendmail', 
+        { email: emails[i], msg }, 
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true
+        }
+      )
+      .then(() => setSentEmails(i + 1))
+      .catch(err => console.error("Failed to send:", err));
     }
 
     alert("✅ All emails sent successfully!");
@@ -107,7 +109,7 @@ function App() {
               onClick={send}
               className="bg-pink-500 text-white p-2 font-medium rounded-md w-[150px] hover:bg-pink-600 transition-all duration-200"
             >
-               {status?"Sending...":"Send"}
+              {status ? "Sending..." : "Send"}
             </button>
           </div>
         </div>
