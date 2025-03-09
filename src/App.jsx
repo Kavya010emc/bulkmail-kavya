@@ -51,10 +51,11 @@ function App() {
 
     // ✅ Loop through emails and send one by one
     for (let i = 0; i < emails.length; i++) {
-      await axios.post("https://bulkmail-backend-kavya-7u21no3eu-kavyas-projects-fffd4e21.vercel.app/sendmail", {
-        email: emails[i],
-        msg: msg
-      });
+      await axios.post(
+  'https://bulkmail-backend-kavya-7u21.vercel.app/send-mail', // Your backend URL
+  { email }, // Your email data
+  { withCredentials: true }
+)
 
       // ✅ Update Progress
       setSentEmails(i + 1);
