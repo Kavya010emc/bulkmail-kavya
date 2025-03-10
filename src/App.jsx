@@ -7,10 +7,11 @@ function App() {
   const [emailList, setEmailList] = useState([]);
   const [status, setStatus] = useState(false);
 
+  // ✅ Handle File Upload (Extract Emails)
   const handleFile = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
-    
+
     reader.onload = (e) => {
       const emails = e.target.result.split('\n').filter(email => email.includes("@"));
       setEmailList(emails);
@@ -19,9 +20,10 @@ function App() {
     reader.readAsText(file);
   };
 
+  // ✅ Handle Send Mail Button
   const sendMail = () => {
     if (!msg || !sub || emailList.length === 0) {
-      alert("Please fill all fields and upload a file.");
+      alert("⚠️ Please fill all fields and upload a file.");
       return;
     }
 
@@ -38,6 +40,7 @@ function App() {
       setStatus(false);
     });
 
+    // ✅ Reset form fields
     setMsg('');
     setSub('');
     setEmailList([]);
@@ -46,26 +49,30 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white">
       <h1 className="text-3xl font-bold mb-6">📧 Bulk Mail Sender</h1>
-      <textarea 
-        className="border p-2 mb-3 w-80 rounded-md" 
+
+      <textarea
+        className="border p-2 mb-3 w-80 rounded-md text-black"
         placeholder="Enter your message"
         value={msg}
         onChange={(e) => setMsg(e.target.value)}
       />
-      <input 
-        className="border p-2 mb-3 w-80 rounded-md" 
-        type="text" 
+
+      <input
+        className="border p-2 mb-3 w-80 rounded-md text-black"
+        type="text"
         placeholder="Subject"
         value={sub}
         onChange={(e) => setSub(e.target.value)}
       />
-      <input 
-        className="border p-2 mb-3 w-80 rounded-md" 
+
+      <input
+        className="border p-2 mb-3 w-80 rounded-md text-black"
         type="file"
         onChange={handleFile}
       />
-      <button 
-        className="bg-pink-500 text-white px-6 py-2 rounded-md"
+
+      <button
+        className={`px-6 py-2 rounded-md ${status ? 'bg-gray-500' : 'bg-pink-500'}`}
         onClick={sendMail}
         disabled={status}
       >
